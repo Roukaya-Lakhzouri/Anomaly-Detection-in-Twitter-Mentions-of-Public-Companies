@@ -5,3 +5,24 @@ stages:
     - src/data_collection.py
     outs:
     - data/raw
+  pre_processing:
+    cmd: python src/Data_Prep.py
+    deps:
+    - data/raw
+    - src/Data_Prep.py
+    outs:
+    - data/processed
+  model_building:
+    cmd: python src/Model_Building.py
+    deps:
+    - data/processed
+    - src/Model_Building.py
+    outs:
+    - model.pkl
+  model_testing:
+    cmd: python src/Model_Testing.py
+    deps:
+    - model.pkl
+    - src/Model_Testing.py
+    outs:
+    - anomaly_results.json
